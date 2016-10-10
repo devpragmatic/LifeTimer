@@ -1,5 +1,8 @@
 package pl.devpragmatic.lifetimer.repository;
 
+import java.util.List;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 import pl.devpragmatic.lifetimer.domain.Time;
 
 /**
@@ -7,12 +10,8 @@ import pl.devpragmatic.lifetimer.domain.Time;
  * @author devpragmatic
  *
  */
-public interface TimeRepository {
+@Repository
+public interface TimeRepository extends CrudRepository<Time, Long> {
 
-    public void save(Time time);
-    
-    public Time findOneById(String id);
-   
-    public void delete(Time time);
-
+    List<Time> findAll();
 }

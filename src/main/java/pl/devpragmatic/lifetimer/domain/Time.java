@@ -1,17 +1,28 @@
 package pl.devpragmatic.lifetimer.domain;
 
-import pl.devpragmatic.lifetimer.builder.TimeBuilder;
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
-public class Time {
-
-    private final int HOURS_IN_DAY = 24;
-    private final int MINUTES_IN_HOUR = 60;
-    private final int SECONDS_IN_MINUTE = 60;
+/**
+ *
+ * @author devpragmatic
+ */
+@Entity
+public class Time implements Serializable {
+    private static final int HOURS_IN_DAY = 24;
+    private static final int MINUTES_IN_HOUR = 60;
+    private static final int SECONDS_IN_MINUTE = 60;
+    
+    @Id 
+    @GeneratedValue
+    private Long id;
     private int days;
     private int hours;
     private int minutes;
     private int seconds;
-    private String parentId;
+    private Long parentId;
     
     public void setTime(int days, int hours, int minutes, int seconds) {
         minutes = seconds/SECONDS_IN_MINUTE + minutes;
@@ -38,6 +49,10 @@ public class Time {
         }
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public int getDays() {
         return days;
     }
@@ -54,7 +69,7 @@ public class Time {
         return seconds;
     }
 
-    public String getParentId() {
+    public Long getParentId() {
         return parentId;
     }
     
@@ -62,7 +77,7 @@ public class Time {
         return parentId != null;
     }
 
-    public void setParentId(String parentId) {
+    public void setParentId(Long parentId) {
         this.parentId = parentId;
     }
 
@@ -93,4 +108,8 @@ public class Time {
         this.seconds = 0;
     }
 
+    @Override
+    public String toString() {
+        return "Time{" + "id=" + id + ", days=" + days + ", hours=" + hours + ", minutes=" + minutes + ", seconds=" + seconds + ", parentId=" + parentId + '}';
+    }
 }
