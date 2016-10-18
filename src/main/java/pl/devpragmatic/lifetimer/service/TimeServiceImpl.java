@@ -53,7 +53,7 @@ public class TimeServiceImpl implements TimeService {
     }
 
     private Time getParent(Time time) {
-        Time parent = timeRepository.findOne(time.getParentId());
+        Time parent = time.getParent();
         if (parent == null) {
             throw new ServiceException(PARENT_EXCEPTION_CODE);
         }

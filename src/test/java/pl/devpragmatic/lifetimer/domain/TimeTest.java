@@ -89,6 +89,12 @@ public class TimeTest {
         equalsTime(4, 0, 5, 0, time);
     }
     
+    @Test
+    public void whenUseGetAsSecondsThenReturnAllSeconds(){
+        time = new TimeBuilder().appendDays(2).appendMinutes(3).appendSeconds(1).toTime();
+        assertEquals(new Long(2*24*60*60+3*60+1), time.getAsSeconds());
+    }
+    
     private void equalsTime(int days, int hours, int minutes, int seconds, Time time) {
         assertEquals(days, time.getDays());
         assertEquals(hours, time.getHours());

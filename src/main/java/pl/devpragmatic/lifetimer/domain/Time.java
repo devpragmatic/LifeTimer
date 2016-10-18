@@ -2,8 +2,10 @@ package pl.devpragmatic.lifetimer.domain;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -22,7 +24,9 @@ public class Time implements Serializable {
     private int hours;
     private int minutes;
     private int seconds;
-    private Long parentId;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Time parent;
     
     public void setTime(int days, int hours, int minutes, int seconds) {
         minutes = seconds/SECONDS_IN_MINUTE + minutes;
@@ -69,18 +73,21 @@ public class Time implements Serializable {
         return seconds;
     }
 
-    public Long getParentId() {
-        return parentId;
+    public Time getParent() {
+        return parent;
     }
     
     public boolean hasParent() {
-        return parentId != null;
+        return parent != null;
     }
 
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
+    public void setParent(Time parent) {
+        this.parent = parent;
     }
-
+    /**
+     * Add time to object
+     * @param time time to add
+     */
     public void addTime(Time time) {
         if(time != null){
             this.days += time.days;
@@ -90,7 +97,10 @@ public class Time implements Serializable {
             this.setTime(days, hours, minutes, seconds);
         }
     }
-   
+    /**
+     * Sub time from object
+     * @param time time to sub
+     */
     public void subTime(Time time) {
         if(time != null){
             this.days -= time.days;
@@ -108,8 +118,23 @@ public class Time implements Serializable {
         this.seconds = 0;
     }
 
+    /**
+     * Return time as seconds
+     * @return number of seconds
+     */
+    public Long getAsSeconds(){
+        return (((new Long(days)*HOURS_IN_DAY)+hours)*MINUTES_IN_HOUR + minutes)*SECONDS_IN_MINUTE + seconds;
+    }
+    /**
+     * Get time fields as string
+     * @return string with fields of time
+     */
+    public String getAsString(){
+        return days + " " + hours + ":" + minutes + ":" + seconds;
+    }
+            
     @Override
     public String toString() {
-        return "Time{" + "id=" + id + ", days=" + days + ", hours=" + hours + ", minutes=" + minutes + ", seconds=" + seconds + ", parentId=" + parentId + '}';
+        return "Time{" + "id=" + id + ", days=" + days + ", hours=" + hours + ", minutes=" + minutes + ", seconds=" + seconds + '}';
     }
 }
