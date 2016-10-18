@@ -4,7 +4,7 @@
     <groupId>pl.devpragmatic</groupId>
     <artifactId>lifetimer</artifactId>
     <version>0.0.1</version>
-    <name>LiveTimer</name>
+    <name>LifeTimer</name>
     <description>Life timer. Calculates the time for the various categories of life.</description>
     <dependencies>
         <!-- Test scope -->
